@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { hostname } from "os";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -20,6 +21,14 @@ const nextConfig: NextConfig = {
       ,
       {
         hostname: "i.ytimg.com",
+        protocol: "https"
+      },
+      {
+        hostname: "plus.unsplash.com",
+        protocol: "https"
+      },
+      {
+        hostname: "**",
         protocol: "https"
       }
     ]

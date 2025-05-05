@@ -7,68 +7,61 @@ import {
   LoginLink,
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
-
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
   const { getUser } = useKindeBrowserClient();
-  const user = getUser();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    setUser(getUser());
+  }, [getUser]);
 
   return (
-    <nav className="bg-white py-4 px-8 flex items-center justify-between shadow-md">
-      <div className="flex items-center gap-6">
+    <nav className="bg-white border-b px-6 py-4 shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link href="/">
-          <h1 className="text-3xl font-semibold text-gray-800 tracking-tight hover:text-indigo-600 transition-all">
-            Algo<span className="text-indigo-600">Scripts</span>
-          </h1>
+        <Link
+          href="/"
+          className="text-2xl font-bold tracking-tight text-indigo-600"
+        >
+          Algo<span className="text-gray-800">Scripts</span>
         </Link>
 
-        {/* Navigation links */}
-        <div className="hidden sm:flex items-center gap-6">
+        {/* Navigation Links */}
+        <div className="hidden md:flex items-center gap-6">
           <Link
-            className="text-lg text-gray-700 hover:text-indigo-600 transition-colors"
             href="/"
+            className="hover:text-indigo-600 text-gray-700 text-lg"
           >
             Home
           </Link>
           <Link
-            className="text-lg text-gray-700 hover:text-indigo-600 transition-colors"
             href="/dashboard"
+            className="hover:text-indigo-600 text-gray-700 text-lg"
           >
             Dashboard
           </Link>
         </div>
-      </div>
 
-      {/* User Authentication */}
-      {user ? (
-        <div className="flex items-center gap-4">
-          <p className="text-lg text-gray-800">{user.given_name}</p>
-          <LogoutLink
-            className={`${buttonVariants({
-              variant: "secondary",
-            })} bg-indigo-600 hover:bg-indigo-700 text-white`}
-          >
-            Logout
-          </LogoutLink>
-        </div>
-      ) : (
-        <div className="flex items-center gap-4">
-          <LoginLink
-            className={`${buttonVariants()} bg-indigo-600 hover:bg-indigo-700 text-white`}
-          >
-            Log in
-          </LoginLink>
-          <RegisterLink
-            className={`${buttonVariants({
-              variant: "secondary",
-            })} bg-gray-200 hover:bg-gray-300 text-gray-800`}
-          >
-            Sign up
-          </RegisterLink>
-        </div>
-      )}
+        {/* Auth Buttons */}
+        {user ? (
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-gray-800">Hi, {user.given_name}</p>
+            <LogoutLink className={buttonVariants({ variant: "secondary" })}>
+              Logout
+            </LogoutLink>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <LoginLink className={buttonVariants()}>Log in</LoginLink>
+            <RegisterLink className={buttonVariants({ variant: "secondary" })}>
+              Sign up
+            </RegisterLink>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }
