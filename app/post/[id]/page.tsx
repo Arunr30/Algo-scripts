@@ -3,7 +3,6 @@
 import { prisma } from "@/app/utils/db";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
