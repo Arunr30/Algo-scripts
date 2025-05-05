@@ -23,7 +23,16 @@ async function getData(userId: string) {
 export default async function DashBoardPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const data = await getData(user?.id as string);
+
+  // Check if user is available and handle the case when not found
+  if (!user || !user.id) {
+    // You can redirect or show a message if user is not found
+    return <div>You are not logged in or user data is missing.</div>;
+  }
+
+  // Now it's safe to access user.id
+  const data = await getData(user.id);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
